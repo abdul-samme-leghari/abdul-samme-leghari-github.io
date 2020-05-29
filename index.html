@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>
+      Circle line
+    </title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.js"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="style.css" type="text/css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="main-div">
+      <!--<div id="mynetwork"></div>-->
+      <!--<div id="mynetwork2"></div>-->
+      <div id="mynetwork" ></div>
+    </div>
+    <div id="mynetwork2"></div>
+    </div>
+    <div id="mynetwork3"></div>
+    </div>
+   
+    <div id="mynetwork4"></div>
+    </div>
+    <div id="mynetwork5"></div>
+    </div>
+    <div id="mynetwork6"></div>
+    </div>
+    <div id="mynetwork7"></div>
+    </div>
+    <div id="mynetwork8"></div>
+    </div>
+   <br />
+    <div style="display: inline-block;">
+      Background: <input class="jscolor" style="width:80px"  value="#FAFAFA" onchange="BackGroundColor(this.value)">
+    </div>
+    <div style="display: inline-block;">
+      left-border: <input class="jscolor" style="width:60px"  value="#57CFD1" onchange="leftBordrColor(this.value)">
+    </div>
+    <div style="display: inline-block;">
+      text-color: <input class="jscolor" style="width:60px"  value="#FAFAFA" onchange="textColorfunc(this.value)">
+    </div>
+
+    <div style="display: inline-block;">
+      bubble-color: <input class="jscolor" style="width:60px"  value="#469490" onchange="myFunction(this.value)">
+
+    </div>
+    <div style="display: inline-block;">
+      line-color: <input class="jscolor" id="mySelect" style="width:60px"  value="#3958FF" onchange="lineColorFunction(this.value)">
+
+    </div>
+    <div style="display: inline-block;">
+      line-style:
+		<select id="lineStyle" onchange="GetSelectedText()">
+			<option value="ID001">solid</option>
+			<option value="ID002" selected>dashes</option>
+		</select>
+
+    </div>
+
+    <div style="display: inline-block;">
+      line-width:
+		<select id="lineWidth" onchange="GetSelectedWidth()">
+			<option value="ID001">1</option>
+      <option value="ID002" selected>2</option>
+      <option value="ID001">3</option>
+      <option value="ID002">4</option>
+      <option value="ID001">5</option>
+      <option value="ID002">6</option>
+      <option value="ID001">7</option>
+      <option value="ID002">8</option>
+      <option value="ID001">9</option>
+			<option value="ID002">10</option>
+		</select>
+    </div>
+    <div>
+      <br />
+    Default text size  as canvas and bubble  initially appears and  on selecting bubble: <input type="checkbox" id="myCheck" onclick="defaultOrNot()"checked >
+  </div>
+  <p style="color:blue;">Note: Disable checkbox to use custom font for initially appearance and on selecting bubble as font size controls the bubble size</p>
+  <div style="display: inline-block;">
+    custom text size: <input type='number' style="width:60px" id="textfont" value="43" onchange="textFontValue(this.value)" disabled>
+  </div>
+  
+  <div style="display: inline-block;">
+    custom text size on selecting bubble: <input type='number' id="textfontonselect" style="width:60px"  value="55" onchange="onSelectTextFontValue(this.value)" disabled>
+  </div>
+    <div class="buttons">
+      <!--<button id="updateData">Update dataset</button>-->
+      <!--<button onclick={reDraw()}>Re draw</button>-->
+    </div>
+    <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript" src="payload.js"></script>
+    <script src="jscolor.js"></script>
+
+    <script>
+
+/*
+let style = {
+  bubbleColor: "#5bbfba", // Add custom color to circle if no color is defined default #5BBFBA color will be selected
+  textColor: "#FFFFFF", // Add text color if no textColor is added default #fff color will be selected.
+  textSize: 43, // Now you can increase/decrease the size of bubble by adding custom text size.
+  lineColor: "blue", // You can add custom color to lines.
+}; */
+
+let style = {
+  bubbleColor: "#5bbfba", // Add custom color to circle if no color is defined default #5BBFBA color will be selected
+  textColor: "#FFFFFF", // Add text color if no textColor is added default #fff color will be selected.
+  textSize: 43, // Now you can increase/decrease the size of bubble by adding custom text size.
+  lineColor: "blue", // You can add custom color to lines.
+  lineStyle:"dashes",
+  lineWidth:2,
+  default: true,
+  onSelectTextSize: 55,
+};
+init();
+function defaultOrNot() {
+  if (document.getElementById("myCheck").checked == true)
+  {
+    document.getElementById("textfontonselect").disabled = true;
+    document.getElementById("textfont").disabled = true;
+    style.default = true;
+
+  }
+   else
+   {
+    document.getElementById("textfontonselect").disabled = false;
+    document.getElementById("textfont").disabled = false;
+    style.default = false;
+
+   }
+   init();
+}
+
+function GetSelectedWidth(){
+				var e = document.getElementById("lineWidth");
+				style.lineWidth = parseInt(e.options[e.selectedIndex].text);
+        console.log(style.lineWidth);
+        init();
+			}
+function GetSelectedText(){
+				var e = document.getElementById("lineStyle");
+				style.lineStyle = e.options[e.selectedIndex].text;
+        init();
+      }
+       
+function textFontValue(val) {
+  style.textSize =val;
+  console.log(style.textSize);
+  init();
+} 
+function onSelectTextFontValue(val) {
+  style.onSelectTextSize =val;
+  console.log(style.onSelectTextSize);
+  init();
+} 
+
+function myFunction(val) {
+  style.bubbleColor =`#${val}`;
+  init();
+}
+
+function leftBordrColor(val) {
+  document.getElementById("mynetwork").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork2").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork3").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork4").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork5").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork6").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork7").style.borderLeft = `10px solid #${val}`; 
+  document.getElementById("mynetwork8").style.borderLeft = `10px solid #${val}`; 
+  init();
+}
+function BackGroundColor(val) {
+  document.getElementById("mynetwork").style.background = `#${val}`; 
+  document.getElementById("mynetwork2").style.background = `#${val}`; 
+  document.getElementById("mynetwork3").style.background = `#${val}`; 
+  document.getElementById("mynetwork4").style.background = `#${val}`; 
+  document.getElementById("mynetwork5").style.background = `#${val}`; 
+  document.getElementById("mynetwork6").style.background = `#${val}`; 
+  document.getElementById("mynetwork7").style.background = `#${val}`; 
+  document.getElementById("mynetwork8").style.background = `#${val}`; 
+  init();
+}
+
+
+function textColorfunc(val) {
+  style.textColor=`#${val}`;
+  init();
+}
+function lineColorFunction(val) {
+  style.lineColor =`#${val}`;
+  init();
+}
+function init() {
+initialization(
+        document.getElementById("mynetwork"),
+        payload1,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork2"),
+        payload2,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork3"),
+        payload3,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork4"),
+        payload4,
+        ready,
+        callback,
+        style
+      ); 
+      initialization(
+        document.getElementById("mynetwork5"),
+        payload5,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork6"),
+        payload6,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork7"),
+        payload7,
+        ready,
+        callback,
+        style
+      );
+      initialization(
+        document.getElementById("mynetwork8"),
+        payload8,
+        ready,
+        callback,
+        style
+      );
+}
+      
+      var payloadUpdate = [
+        { termKey: "grease", ideaRelevance: 1.2382296181306758, edges: [] },
+        {
+          termKey: "allergic reactions",
+          ideaRelevance: 1.2738586984706075,
+          edges: [
+            { to: "skin irritations" },
+            { to: "allergies" },
+            { to: "grease" },
+          ],
+        },
+        { termKey: "allergies", ideaRelevance: 1.3328124416540958, edges: [] },
+        { termKey: "sulfates", ideaRelevance: 1.351403153311993, edges: [] },
+        {
+          termKey: "sodium carbonate",
+          ideaRelevance: 1.6083038745810452,
+          edges: [{ to: "sulfates" }],
+        },
+        {
+          termKey: "chlorine bleach",
+          ideaRelevance: 1.7547831541663135,
+          edges: [{ to: "skin irritations" }, { to: "sulfates" }],
+        },
+        {
+          termKey: "skin irritations",
+          ideaRelevance: 1.8792809377324515,
+          edges: [],
+        },
+      ];
+     /*  document.getElementById("updateData").onclick = function () {
+        mapManager.updateDataset(mapManager.network, payloadUpdate);
+      }; */
+    </script>
+  </body>
+</html>

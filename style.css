@@ -1,0 +1,48 @@
+html,
+body,
+#mynetwork,
+#mynetwork2,
+#mynetwork3,
+#mynetwork4,
+#mynetwork5,
+#mynetwork6,
+#mynetwork7,
+#mynetwork8 {
+  margin: 0;
+  padding: 0;
+  background: #fafafa;
+
+  letter-spacing: 2px;
+}
+.main-div {
+  display: inline-block;
+}
+#mynetwork,
+#mynetwork2,
+#mynetwork3,
+#mynetwork4,
+#mynetwork5,
+#mynetwork6,
+#mynetwork7,
+#mynetwork8 {
+  /*height: 500px;*/
+  /*width: 500px;*/
+  display: inline-block;
+  height: 170px;
+  width: 220px;
+  border-radius: 0;
+  background: #fafafa;
+  box-shadow: 9px 9px 18px #d5d5d5, -9px -9px 18px #ffffff;
+  border-left: 10px solid #3ecfd1;
+  outline: none;
+  transition: background-color 0.1s linear;
+  margin: 20px 20px;
+}
+.buttons {
+  padding-top: 20px;
+}
+.buttons button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 3px;
+}
